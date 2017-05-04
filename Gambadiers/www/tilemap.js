@@ -88,6 +88,9 @@
      {
          //LOOP THROUGH OUR ARRAY AND DRAW EACH SPRITE USING RENDERRAWXY
          //this.texture.renderRawXY(tiles[], tiles[y][x].x, tiles[y][x].y, false)
+
+         //FOR WEBGL ON MOBILE, NEED TO SUBDIVIDE TILEMAP INTO SMALLER SECTIONS (512x512)
+
          for (var i = 0; i < this.tiles.length; i++)
          {
              this.tiles[i].visible = true;

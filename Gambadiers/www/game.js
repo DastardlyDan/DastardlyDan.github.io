@@ -4,7 +4,7 @@ var browsersize =
   height: window.innerHeight
 }
 
-var game = new Phaser.Game(browsersize.width, browsersize.height, Phaser.WEBGL, '', { preload: preload, create: create, update: update, render: render });
+var game = new Phaser.Game(browsersize.width, browsersize.height, Phaser.CANVAS, '', { preload: preload, create: create, update: update, render: render });
 var url_textures = "assets/textures/";
 
 function preload() 
@@ -21,7 +21,7 @@ function preload()
 
     game.load.tilemap('level', 'test2.csv', null, Phaser.Tilemap.CSV);
 
-    game.time.desiredFps = 30;
+    game.time.desiredFps = 60;
     game.time.advancedTiming = true;
 
 
