@@ -1,0 +1,19 @@
+body
+{
+  background-color: "rgb(45,40,55)";
+}
+
+p
+{
+  color: "rgb(255,255,255)";
+}
+
+a
+{
+  color: "rgb(225,225,0)";
+}
+
+a:hover
+{
+  color: "rgb(255,255,0)";
+}
