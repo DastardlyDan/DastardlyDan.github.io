@@ -1,17 +1,20 @@
 html
 {
     cursor: none;
-	margin: 0px;	
+	margin: 0;	
 	overflow: hidden;
 
 }
 
 body
 {
-	margin: 0px;	
+	margin: 0;	
+    padding: 0;
 	overflow: hidden;
 
 }
+
+html, body, #game {height: 100%;}
 
 .UILayer
 {

@@ -68,8 +68,8 @@
          //console.log(this.int_dimensions);
          //this.createTileSections();
          this.createTiles();
-         this.setBordersVisible();
-         this.updateTexture();
+         //this.setBordersVisible();
+         //this.updateTexture();
      },
 
      createTiles: function()
@@ -121,92 +121,7 @@
          
      },
 
-     createTileSections: function ()
-     {
-         //double for loop for sections row by row
-         this.tiles = [];
-
-         var integer_size = new Phaser.Rectangle(0,0,4,4);
-         var float_size = new Phaser.Rectangle(0,0,256.0,256.0);
-         
-         for (var y = 0; y < this.tile_section_dimensions.height; y++)
-         {
-             var row = [];
-             for (var x = 0; x < this.tile_section_dimensions.width; x++)
-             {
-                 //set integer positions for integer rect
-                 integer_size.x = x * 4; 
-                 integer_size.y = y * 4;
-                 //set float positions (world space co-ords and screen size)
-                 float_size.x = this.position.x + (this.dimensions.width * x);// * (this.size * integer_size.width); //256
-                 float_size.y = this.position.y + (this.dimensions.height * y);// * (this.size * integer_size.width); //256
-                 float_size.width = this.dimensions.width; //64*4 = 256
-                 float_size.height = this.dimensions.height; //64*4 = 256
-
-                 var section = TileSection.create(integer_size, float_size, this.size);
-                 row.push(section);
-
-             }
-             this.tiles.push(row);
-         }
-         //console.log(this.tiles.length);
-     },
-
-     setBordersVisible: function()
-     {
-         //top row
-         for (var i = 0; i < this.int_dimensions.width; i++)
-         {
-             this.tiles[0][i].sprite.alpha = 1.0;
-             this.tiles[0][i].sprite.body.enable = true;
-         }
-         //bottom row
-         for (var i = 0; i < this.int_dimensions.width; i++)
-         {
-             this.tiles[63][i].sprite.alpha = 1.0;
-             this.tiles[63][i].sprite.body.enable = true;
-         }
-
-         //left col
-         for (var i = 0; i < this.int_dimensions.height; i++)
-         {
-             this.tiles[i][0].sprite.alpha = 1.0;
-             this.tiles[i][0].sprite.body.enable = true;
-         }
-
-         //right col
-         for (var i = 0; i < this.int_dimensions.height; i++)
-         {
-             this.tiles[i][127].sprite.alpha = 1.0;
-             this.tiles[i][127].sprite.body.enable = true;
-         }
-
-         
-
-     },
-
-     /*
-     generateTextureSections: function()4
-     {
-         this.tile_section_textures = []; //create blank array
-
-         //add render textures as a 2D array [y][x]
-         for(var y = 0; y < this.int_dimensions.height; y++)
-         {
-             var row = []; //make a blank new array for each row
-             for (var x = 0; x < this.int_dimensions.width; x++)
-             {
-                 //fill this row
-                 var texture = new Phaser.RenderTexture(game, _dimensions.width, _dimensions.height);
-                 row.push()
-             }
-             //push row to array
-             this.tile_section_textures.push(row);
-         }
-
-     },
-     */
-     loadCSV: function()
+     loadTilemap: function(url)
      {
 
      },
@@ -231,20 +146,7 @@
 
      updateTexture: function()
      {
-         //LOOP THROUGH OUR ARRAY AND DRAW EACH SPRITE USING RENDERRAWXY
-         //this.texture.renderRawXY(tiles[], tiles[y][x].x, tiles[y][x].y, false)
 
-         //FOR WEBGL ON MOBILE, NEED TO SUBDIVIDE TILEMAP INTO SMALLER SECTIONS (512x512)
-         /*
-         for (var i = 0; i < this.tiles.length; i++)
-         {
-             this.tiles[i].visible = true;
-             this.texture.renderRawXY(this.tiles[i], this.tiles[i].x, this.tiles[i].y, false);
-             this.tiles[i].visible = false;
-         }
-
-         //this.sprite.tint = 0xEE00EE;
-         */
      },
 
      exportCSV: function()

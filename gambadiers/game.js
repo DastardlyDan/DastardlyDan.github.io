@@ -7,14 +7,13 @@ var browsersize =
 var game = new Phaser.Game(browsersize.width, browsersize.height, Phaser.CANVAS, '', { preload: preload, create: create, update: update, render: render });
 var url_textures = "assets/textures/";
 
-function preload() 
-{
+function preload() {
 
     //game.scale.pageAlignHorizontally = true;
     //game.scale.pageAlignVertically = true;
     //game.scale.setScreenSize(true);
-    
-	game.load.image('background', url_textures + 'debug-64-repeat.png');
+
+    game.load.image('background', url_textures + 'debug-64-repeat.png');
     game.load.image('player', url_textures + 'debug-player-64.png');
     game.load.image('debug_tile', url_textures + 'debug-tile.png');
     game.load.image('tiles', url_textures + 'tileset.png');
@@ -24,6 +23,21 @@ function preload()
     game.time.desiredFps = 60;
     game.time.advancedTiming = true;
 
+
+
+}
+
+function adjust()
+{
+    //resize canvas to full screen
+    var divgame = document.getElementById("game");
+    divgame.style.width = window.innerWidth + "px"
+    divgame.style.height = window.innerHeight + "px";
+}
+
+function resizeGame()
+{
+    game.scale.setGameSize(window.innerWidth, window.innerHeight);
 }
 
 var player;
@@ -50,7 +64,7 @@ var tilemap;
 var Tiles = [];
 
 //var worldBounds = Vector.create(8192,4096);
-var worldBounds = Vector.create(8192,4096);
+var worldBounds = Vector.create(4096,2048);
 //var worldBounds = Vector.create(512,256);
 var playerCollisionGroup;
 var entityCollisionGroup;
@@ -73,9 +87,29 @@ var fps_colour;
 
 var renderer = 'Renderer: ';
 
+window.onresize = function ()
+{
+    /*
+    var height = window.innerHeight;
+    var width = window.innerWidth;
+
+    game.width = width;
+    game.height = height;
+    game.stage.bounds.width = width;
+    game.stage.bounds.height = height;
+    game.camera.setSize(width, height);
+    */
+    resizeGame();
+    //adjust();
+
+};
+
+
 function create() 
 {
+
     //game.scale.startFullScreen(true);
+    //Phaser.ScaleManager.SHOW_ALL;
     game.world.setBounds(0, 0, worldBounds.getX(), worldBounds.getY());
     game.stage.backgroundColor = "#999999";
 
@@ -86,39 +120,40 @@ function create()
     //game.physics.startSystem(Phaser.Physics.ARCADE);
 
     //Arcade Physics
-    game.physics.startSystem(Phaser.Physics.ARCADE);
+    //game.physics.startSystem(Phaser.Physics.ARCADE);
     //game.physics.arcade.setBoundsToWorld(true, true, true, true, false);
-    game.physics.arcade.gravity.y = 1000;
+    //game.physics.arcade.gravity.y = 1000;
 
     //Enable P2 Physics Engine
-    /*
     game.physics.startSystem(Phaser.Physics.P2JS);
-    game.physics.p2.setBoundsToWorld(true, true, true, true, false);
+    game.physics.p2.setBoundsToWorld(true, true, true, true);
+    game.world.setBounds(0, 0, worldBounds.getX(), worldBounds.getY());
     //Turn on impact events for the world
     game.physics.p2.setImpactEvents(true);
     //Set Gravity
-    game.physics.p2.gravity.y = 5000;
+    game.physics.p2.gravity.y = 0;
 
     playerCollisionGroup = game.physics.p2.createCollisionGroup();
     entityCollisionGroup = game.physics.p2.createCollisionGroup();
     tileCollisionGroup = game.physics.p2.createCollisionGroup();
-    */
-
 
     //BACKGROUND SETUP
-    //background = game.add.tileSprite(0, 0, worldBounds.getX(), worldBounds.getY(), 'background');
+    background = game.add.tileSprite(0, 0, worldBounds.getX(), worldBounds.getY(), 'background');
 
     layer_background = game.add.group();
+    game.physics.p2.updateBoundsCollisionGroup();
 
     //layer_background.add(background);
     layer_tiles = game.add.group();
+    game.physics.p2.updateBoundsCollisionGroup();
     layer_entities = game.add.group();
+    game.physics.p2.updateBoundsCollisionGroup();
 
 
-    tilemap = TileMap.create(new Phaser.Point(worldBounds.getX() / 2, worldBounds.getY() / 2), new Phaser.Rectangle(0, 0, 8192, 4096));
+    tilemap = TileMap.create(new Phaser.Point(worldBounds.getX() / 2, worldBounds.getY() / 2), new Phaser.Rectangle(0, 0, 4096, 2048));
 
-    game.physics.arcade.collide(layer_entities, layer_tiles);
-    game.physics.arcade.collide(layer_tiles, layer_entities);
+    //game.physics.arcade.collide(layer_entities, layer_tiles);
+    //game.physics.arcade.collide(layer_tiles, layer_entities);
     //layer_tiles.autoCull = true; //Enable autoCull for performance reasons.
 
     //ayer_tiles.inputEnableChildren = true;
@@ -184,7 +219,8 @@ function create()
     //generateBoundTiles();
     */
     //PLAYER
-    player = Player.create(Vector.create(worldBounds.getX()/2, worldBounds.getY()-256.0));
+
+    player = Player.create(Vector.create(worldBounds.getX() / 2, worldBounds.getY() / 2));
 
     cursors = game.input.keyboard.createCursorKeys();
    
@@ -211,9 +247,9 @@ function create()
 
     //Add objects to gameWorld Group
 
-    gameWorld.add(layer_background);
-    gameWorld.add(layer_entities);
-    gameWorld.add(layer_tiles);
+    //gameWorld.add(layer_background);
+    //gameWorld.add(layer_entities);
+    //gameWorld.add(layer_tiles);
     //gameWorld.add(touchControlsGroup);
 
     //game.physics.arcade.collide(layer_entities);
@@ -254,8 +290,8 @@ function create()
     game.input.addPointer();
 
     //touchControlsGroup.fixedToCamera = true;
-    gameWorld.bringToTop(layer_tiles);
-    gameWorld.bringToTop(layer_entities);
+    //gameWorld.bringToTop(layer_tiles);
+    //gameWorld.bringToTop(layer_entities);
 }
 
 function updatePlayerTouchControls()
@@ -369,23 +405,23 @@ function update()
     //game.physics.p2.updateBoundsCollisionGroup();
     //game.physics.arcade.setBounds(0, 0, (worldBounds.x * worldScale), (worldBounds.y * worldScale));
 
-    worldScale = Phaser.Math.clamp(worldScale, 0.6, 1.0);
+    //worldScale = Phaser.Math.clamp(worldScale, 0.6, 1.0);
     //apply scale to gameWorld Container (contains all object present in the game world)
-    gameWorld.scale.set(worldScale);
+    //gameWorld.scale.set(worldScale);
 
 
     //layer.scale.set(worldScale * 2);
 
     //game.camera.focusOn(player._sprite);
-    cameraZoom();
+    //cameraZoom();
 
-    tilemap.update();
-    updatePlayerTouchControls();
+    //tilemap.update();
+    //updatePlayerTouchControls();
     player.update();
     //tilemap.updateTexture(layer);
     //zoom
-    game.physics.arcade.collide(layer_entities, layer_tiles);
-    game.physics.arcade.collide(layer_tiles, layer_entities);
+    //game.physics.arcade.collide(layer_entities, layer_tiles);
+    //game.physics.arcade.collide(layer_tiles, layer_entities);
     /*
     if (game.input.keyboard.isDown(Phaser.Keyboard.Q)) {
         worldScale -= 0.005;
@@ -412,9 +448,9 @@ function update()
     //layer.offsetX = -game.world.width / 2;
     //layer.offsetY = -game.world.height / 2;
 
-    /*
+    
     //60 FPS DREAM
-
+    /*
     fps = game.time.fps || '--';
 
     if(fps > 45)
@@ -431,8 +467,8 @@ function update()
     }
 
     dbg_dt = game.time.elapsedMS;
+    
     */
-
     fps = game.time.fps || '--';
 
     if (fps > 27)
@@ -453,25 +489,24 @@ function update()
 
 function render() 
 {
-    //player.render();
+    player.render();
     
-    //game.debug.cameraInfo(game.camera, 32, 32);
-    //game.debug.spriteInfo(player._sprite, 32, 128);
-    game.debug.bodyInfo(player._sprite, 4, 100);
+    game.debug.text("build 1a", window.innerWidth-128, 16);
+    game.debug.cameraInfo(game.camera, 4, 32);
+    game.debug.spriteInfo(player._sprite, 4, 128);
+    //game.debug.bodyInfo(player._sprite, 4, 100);
     //game.debug.spriteInfo(player._graphics, 32, 256);
-
+    
     game.debug.text("World Bounds: XY(" + game.world.bounds.x + "," + game.world.bounds.y + ") WH(" + game.world.bounds.width + "," + game.world.bounds.height + ")", 4, 256);
 
     game.debug.text("Camera Bounds: XY(" + game.camera.bounds.x + "," + game.camera.bounds.y + ") WH(" + game.camera.bounds.width + "," + game.camera.bounds.height + ")", 4, 272);
 
-    game.debug.text(renderer + ":" + fps + "\t" + dbg_dt + "ms", 2, 16, fps_colour);
-    game.debug.text("Selected Tile Pos: [" + tilemap.selected_tile_pos.x + "," + tilemap.selected_tile_pos.y + "]", 2, 32);
-    game.debug.text("Selected Tile Index: [" + tilemap.selected_tile + "]", 2, 48);
+    //game.debug.text(renderer + ":" + fps + "\t" + dbg_dt + "ms", 4, 16, fps_colour);
+    //game.debug.text("Selected Tile Pos: [" + tilemap.selected_tile_pos.x + "," + tilemap.selected_tile_pos.y + "]", 2, 32);
+    //game.debug.text("Selected Tile Index: [" + tilemap.selected_tile + "]", 2, 48);
     game.debug.pointer(game.input.activePointer);
 
-
-    game.debug.body(player._sprite);
-    game.debug.body(tilemap.tiles[3][4].sprite);
+    game.debug.text(renderer + ":" + fps + "\t" + dbg_dt + "ms", 2, 16, fps_colour);
     //game.debug.spriteInfo(tilemap.display_sprite, 32, 256);
     //game.debug.spriteInfo(layer, 32, 256);
     /*

@@ -2,7 +2,8 @@
 var Player =
 {
 	//properties
-	_sprite: null,
+    _sprite: null,
+    _speed: 250,
 	_graphics: null,
 	_blob: null,
 	_eye_left: null,
@@ -79,26 +80,32 @@ var Player =
 
 	    //Enable Physics for Player
 
-        /*
+        
 		game.physics.p2.enable(this._sprite)
 		//Enable Settings
 		this._sprite.body.dynamic = true;
 		this._sprite.body.friction = true;
-    	this._sprite.body.fixedRotation = true;
+		this._sprite.body.fixedRotation = true;
+		this._sprite.body.damping = 0.8;
+
 		//Set Player to use playerCollisionGroup
-		this._sprite.body.setCollisionGroup(playerCollisionGroup);
+		//this._sprite.body.setCollisionGroup(playerCollisionGroup);
 		//SetPlayer to collide with TileGroup
-		this._sprite.body.collides([playerCollisionGroup, tileCollisionGroup]);
-        */
+	    //this._sprite.body.collides([playerCollisionGroup, tileCollisionGroup]);
+
+
+
+		//this._sprite.body.collideWorldBounds = true;
+        
         /*
 		this._sprite.enableBody = true;
 		this._sprite.physicsBodyType = Phaser.Physics.ARCADE;
 		this._sprite.collideWorldBounds = true;
         */
 
-		game.physics.enable(this._sprite, Phaser.Physics.ARCADE);
-		this._sprite.allowGravity = true;
-		this._sprite.body.syncBounds = true;;
+		//game.physics.enable(this._sprite, Phaser.Physics.P2);
+		//this._sprite.allowGravity = false;
+		//this._sprite.body.syncBounds = true;
 		//this._sprite.body.collideWorldBounds = true;
         //this._sprite.body.
 
@@ -152,41 +159,43 @@ var Player =
 	update: function()
 	{
 	    //this._sprite.anchor = new Phaser.Point(0.5, 0.5);
-	    this._sprite.body.setSize(64 * worldScale, 128 * worldScale, (64 * (1-worldScale))/2, (128 * (1-worldScale))/2);
+	    //this._sprite.body.setSize(64 * worldScale, 128 * worldScale, (64 * (1-worldScale))/2, (128 * (1-worldScale))/2);
 	    //this._sprite.anchor = new Phaser.Point(0.5, 0.5);
 	    //console.log(this._sprite.body);
 
-	    console.log(layer_entities.scale);
+	    //console.log(layer_entities.scale);
 		//test player movement
 		this._last_facing = this._facing;
 		//this._sprite.body.velocity.x = this._sprite.body.velocity.x * 0.959;
 		//this._sprite.body.velocity.y = this._sprite.body.velocity.y * 0.959;
-		this._sprite.body.velocity.x = 0;
+		//this._sprite.body.velocity.x = 0;
+		//this._sprite.body.velocity.y = 0;
 
     	if (cursors.up.isDown || wasd.up.isDown || player_touchcontrol.jump)
     	{
+            /*
     	    this._sprite.y -= 1.0;
     	    if (this._sprite.body.touching.down)
     	    {
     	        
-    	        this._sprite.body.velocity.y = -10000;
+    	        this._sprite.body.velocity.y = 2000;
     	    }
-    	    
-
+            */
+    	    this._sprite.body.velocity.y = -this._speed;
 
 		}
 		else if (cursors.down.isDown || wasd.down.isDown)
 		{
-			this._sprite.body.velocity.y = 2000;
+		    this._sprite.body.velocity.y = this._speed;
 		}
 
     	if (cursors.left.isDown || wasd.left.isDown || player_touchcontrol.left)
 		{
-			this._sprite.body.velocity.x = -500;
+    	    this._sprite.body.velocity.x = -this._speed;
 		}
     	else if (cursors.right.isDown || wasd.right.isDown || player_touchcontrol.right)
 		{
-			this._sprite.body.velocity.x = +500;
+    	    this._sprite.body.velocity.x = this._speed;
 		}
 
 		if(this._sprite.body.velocity.x > 0)
