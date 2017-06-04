@@ -1,0 +1,40 @@
+Todos:
+
+basic platformer:
+-change physics to arcade mode
+-add gamepad controls (dpad or analog stick)
+-display fps / delta
+-display camera co-ords / player cords
+-Get Mouse Screen to World Co-ordinates and display them
+-Fix Camera Zoom issue
+
+SVG to texture pipeline
+
+
+SPRITE FLIPPING
+-bake to one graphics texture and flip scale and rebake, before zoom scale is applied?
+
+Tile Editor:
+-Tile Class, Either Phaser Sprites with box collision or use Phaser TileMap Class?. Phaser Tilemap will work for now
+but to have special tiles with animations and effects on player might be harder. Only uses phaser sprite anyway for rendering
+so no advantage to creating a custom tile class.
+-Level Data Object for loading level data / storing it for use
+-Function for loading / saving level data to text / json file.
+-Function for clearing level data
+-Function for taking mouse co-ords, translating to tile co-ords (3369,2042 -> 64,32) etc
+-Menu Controls to change tile colour and draw them, right click to delete, highlight square hovering on.
+
+
+-basic tile editing (left click place, right click remove)
+
+
+LAYERS:
+-World (background, stage)
+-stage (tiles, entities, )
+
+-UI?
+
+-Player character concept art 2
+Implement graphics drawn body, moving legs / morphing body (use two sine waves for each foot, one horiz one vertical with different phases (inverted?), so as one is up/right, the other is left/down). Get a cute little running animation going based on the players speed
+-Jumping, player jumps by holding and letting go? Could work well on mobile. a quick tap with just perform a hop, player has to hold for 0.3 seconds or so to perform the normal jump. Player model compresses and stretches to follow this. Player head could follow the true position have have the legs trail slightling so the body can warp more? Double jumping works by doing a little squish hop in mid air.
+
