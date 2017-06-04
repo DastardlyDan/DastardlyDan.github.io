@@ -148,7 +148,7 @@ var playState =
 
         this.player.render();
 
-        game.debug.text("build 1a", window.innerWidth - 128, 16);
+        game.debug.text(build, window.innerWidth - 128, 16);
         game.debug.cameraInfo(game.camera, 4, 32);
         game.debug.spriteInfo(this.player._sprite, 4, 128);
 

@@ -1,5 +1,5 @@
 var game = new Phaser.Game(browsersize.width, browsersize.height, Phaser.CANVAS);
-
+var build = "build 2a";
 var cursors;
 var wasd;
 var key_1;

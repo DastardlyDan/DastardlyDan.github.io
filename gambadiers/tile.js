@@ -55,7 +55,8 @@ var Tile =
 	addSprite: function()
 	{
 	    //adds a new sprite, takes optional colour argument
-        //console.log(this.sprite);
+	    //console.log(this.sprite);
+	    console.log(this.sprite);
 	    if (this.sprite === null) //only create a new tile if the was deleted
 	    {
 	        //console.log("Sprite added");
@@ -97,6 +98,7 @@ var Tile =
         if (this.sprite != null)
         {
             this.sprite.destroy();
+            this.sprite = null;
         }
     },
 

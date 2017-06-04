@@ -159,7 +159,8 @@
          }
 
          //Input
-         if (game.input.activePointer.isDown) {
+         if (game.input.activePointer.isDown)
+         {
              //check selected tool
              if (this.tool == "brush") {
                  this.tiles[this.selected_tile_index.y][this.selected_tile_index.x].addSprite();
