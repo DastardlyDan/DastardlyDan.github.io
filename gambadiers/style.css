@@ -1,0 +1,76 @@
+html
+{
+    cursor: none;
+	margin: 0;	
+	overflow: hidden;
+    color: white
+}
+
+body
+{
+	margin: 0;	
+    padding: 0;
+	overflow: hidden;
+
+}
+
+html, body, #game {height: 100%;}
+
+#game
+{
+    position: absolute;
+    z-index: 0;
+    user-select: none;
+}
+
+p
+{
+    color: white;
+}
+
+#UILayer
+{
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 15%;
+    z-index: 1000;
+    float: left;
+    display: inline-block;
+    background-color:transparent;
+    user-select: none;
+}
+
+#UI_EditorLayer
+{
+    z-index: 1000;
+    float: left;
+    width:100%;
+    display: inline-block;
+    background-color:transparent;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.EditorButton
+{
+    float: left;
+    margin: 5%;
+    padding: 5%;
+    display: inline-block;
+    user-select: none;
+}
+
+.EditorWidget
+{
+    display: inline-block;
+    padding: 2%;
+    user-select: none;
+    font-size: 400%;
+    margin:2%;
+}
+
+.slider
+{
+    margin: 12.5%;
+}
